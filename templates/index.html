@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Translation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 24px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 14px;
+            color: #555;
+        }
+
+        input[type="file"],
+        input[type="number"],
+        button {
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .images {
+            display: flex; /* Membuat tata letak horizontal */
+            justify-content: space-between; /* Memberikan jarak antara gambar */
+            align-items: center; /* Menjaga gambar sejajar secara vertikal */
+            margin-top: 20px;
+        }
+
+        .image-container {
+            text-align: center;
+            width: 48%; /* Memberikan ukuran lebar proporsional */
+        }
+
+        img {
+            width: 100%; /* Membatasi lebar maksimal gambar */
+            height: auto; /* Menjaga proporsi gambar */
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Translation</h1>
+        <form action="/" method="post" enctype="multipart/form-data">
+            <label for="image">Upload Image:</label>
+            <input type="file" id="image" name="image" required>
+
+            <label for="dx">Translation X (dx):</label>
+            <input type="number" id="dx" name="dx" placeholder="e.g., 50 for right, -50 for left" required>
+
+            <label for="dy">Translation Y (dy):</label>
+            <input type="number" id="dy" name="dy" placeholder="e.g., 50 for down, -50 for up" required>
+
+            <button type="submit">Translate</button>
+        </form>
+
+        {% if original and translated %}
+        <div class="images">
+            <div class="image-container">
+                <h2>Original Image:</h2>
+                <img src="{{ url_for('serve_file', filename='uploads/' + original) }}" alt="Original Image">
+            </div>
+            <div class="image-container">
+                <h2>Translated Image:</h2>
+                <img src="{{ url_for('serve_file', filename=translated) }}" alt="Translated Image">
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
